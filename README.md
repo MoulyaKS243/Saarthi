@@ -164,43 +164,6 @@ Maintains:
 
 ---
 
-# 🖥 Project Screenshots
-
-## Home Page
-
-![Home](Screenshots/home.png)
-
----
-
-## Dashboard
-
-![Dashboard](Screenshots/dashboard.png)
-
----
-
-## AI Chat Assistant
-
-![Chat](Screenshots/chat.png)
-
----
-
-## Banking Simulator
-
-![Simulator](Screenshots/simulator.png)
-
----
-
-## Learning Module
-
-![Learning](Screenshots/learning.png)
-
----
-
-## User Profile
-
-![Profile](Screenshots/profile.png)
-
----
 
 # 🛠 Technology Stack
 
