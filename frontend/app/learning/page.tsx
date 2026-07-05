@@ -1,7 +1,9 @@
-export default function Login() {
+export default function Learning() {
   return (
-    <div className="flex h-screen items-center justify-center">
-      Login Page
-    </div>
+    <main className="min-h-screen flex items-center justify-center">
+      <h1 className="text-5xl font-bold">
+        📚 Learning Center
+      </h1>
+    </main>
   );
 }

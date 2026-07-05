@@ -1,38 +1,42 @@
-import { GoogleGenAI } from "@google/genai";
+import Groq from "groq-sdk";
 import { NextResponse } from "next/server";
 
-// 👇 Add this line
-console.log("KEY:", process.env.GEMINI_API_KEY);
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY!,
 });
 
 export async function POST(req: Request) {
   try {
     const { message } = await req.json();
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: `
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages: [
+        {
+          role: "system",
+          content: `
 You are Saarthi, an AI Digital Banking Assistant.
 
 Rules:
 - Explain banking in very simple English.
-- Help beginners understand UPI, NEFT, IMPS, ATM, Debit Card, Credit Card, and Net Banking.
-- Warn users about OTP scams, phishing, and fraud.
-- Never ask for PIN, password, or OTP.
-- Keep answers short and friendly.
-
-User: ${message}
+- Help beginners understand UPI, IMPS, NEFT, Debit Cards, Credit Cards, Net Banking and ATMs.
+- Warn users about OTP scams, phishing and fraud.
+- Never ask for passwords, PINs or OTPs.
+- Keep answers short, friendly and educational.
 `,
+        },
+        {
+          role: "user",
+          content: message,
+        },
+      ],
     });
 
     return NextResponse.json({
-      reply: response.text,
+      reply: completion.choices[0].message.content,
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
     return NextResponse.json(
       {

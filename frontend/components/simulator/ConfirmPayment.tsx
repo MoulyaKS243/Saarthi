@@ -25,7 +25,7 @@ export default function ConfirmPayment({
         ← Back
       </button>
 
-      <h1 className="mb-8 text-3xl font-bold text-center">
+      <h1 className="mb-8 text-center text-3xl font-bold">
         Confirm Payment
       </h1>
 
@@ -54,7 +54,7 @@ export default function ConfirmPayment({
 
         <button
           onClick={onBack}
-          className="flex-1 rounded-xl border border-gray-300 py-3 hover:bg-gray-100"
+          className="flex-1 rounded-xl border py-3 hover:bg-gray-100"
         >
           Cancel
         </button>

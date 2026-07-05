@@ -1,33 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Props {
-  onSuccess: () => void;
   onBack: () => void;
+  onSuccess: () => void;
 }
 
-export default function UpiPin({ onSuccess, onBack }: Props) {
+export default function UpiPin({
+  onBack,
+  onSuccess,
+}: Props) {
   const [pin, setPin] = useState("");
 
   function press(value: string) {
     if (pin.length >= 4) return;
-    setPin((prev) => prev + value);
+
+    const newPin = pin + value;
+    setPin(newPin);
+
+    if (newPin.length === 4) {
+      setTimeout(() => {
+        onSuccess();
+      }, 700);
+    }
   }
 
   function removeDigit() {
     setPin((prev) => prev.slice(0, -1));
   }
-
-  useEffect(() => {
-    if (pin.length === 4) {
-      setTimeout(() => {
-        onSuccess();
-      }, 800);
-    }
-  }, [pin, onSuccess]);
-
-  const numbers = ["1","2","3","4","5","6","7","8","9"];
 
   return (
     <div className="mx-auto max-w-md rounded-3xl bg-white p-8 shadow-xl">
@@ -43,16 +44,18 @@ export default function UpiPin({ onSuccess, onBack }: Props) {
         Enter UPI PIN
       </h1>
 
-      <p className="mt-3 text-center text-gray-500">
-        This is a simulated payment.
+      <p className="mt-2 text-center text-gray-500">
+        Enter your 4-digit UPI PIN
       </p>
 
       <div className="my-10 flex justify-center gap-4">
-        {[0,1,2,3].map((i)=>(
+        {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
             className={`h-5 w-5 rounded-full ${
-              i < pin.length ? "bg-blue-700" : "bg-gray-300"
+              i < pin.length
+                ? "bg-blue-700"
+                : "bg-gray-300"
             }`}
           />
         ))}
@@ -60,11 +63,11 @@ export default function UpiPin({ onSuccess, onBack }: Props) {
 
       <div className="grid grid-cols-3 gap-4">
 
-        {numbers.map((n)=>(
+        {[1,2,3,4,5,6,7,8,9].map((n)=>(
           <button
             key={n}
-            onClick={()=>press(n)}
-            className="rounded-xl border p-5 text-xl font-bold hover:bg-gray-100"
+            onClick={()=>press(String(n))}
+            className="rounded-xl border p-5 text-2xl font-bold hover:bg-gray-100"
           >
             {n}
           </button>
@@ -72,14 +75,14 @@ export default function UpiPin({ onSuccess, onBack }: Props) {
 
         <button
           onClick={removeDigit}
-          className="rounded-xl border p-5 font-semibold hover:bg-gray-100"
+          className="rounded-xl border p-5 font-bold hover:bg-gray-100"
         >
           ⌫
         </button>
 
         <button
           onClick={()=>press("0")}
-          className="rounded-xl border p-5 text-xl font-bold hover:bg-gray-100"
+          className="rounded-xl border p-5 text-2xl font-bold hover:bg-gray-100"
         >
           0
         </button>
